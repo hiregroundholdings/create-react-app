@@ -31,6 +31,12 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1;
 fi
 
+# If NPM_CONFIG_NAMESPACE is defined, create a temporary .npmrc file
+if [ -n "$NPM_CONFIG_NAMESPACE" ]; then
+  echo "Creating temporary .npmrc for namespace: @$NPM_CONFIG_NAMESPACE"
+  echo "@$NPM_CONFIG_NAMESPACE:registry=${NPM_CONFIG_REGISTRY}" > .npmrc
+fi
+
 # Compile
 npm run build:prod -w react-error-overlay
 
