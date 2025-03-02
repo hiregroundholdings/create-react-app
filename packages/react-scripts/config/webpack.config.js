@@ -32,6 +32,7 @@ const ForkTsCheckerWebpackPlugin =
   process.env.TSC_COMPILE_ON_ERROR === 'true'
     ? require('react-dev-utils/ForkTsCheckerWarningWebpackPlugin')
     : require('react-dev-utils/ForkTsCheckerWebpackPlugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
@@ -763,6 +764,9 @@ module.exports = function (webpackEnv) {
             infrastructure: 'silent',
           },
         }),
+      // TypeScript path aliases
+      useTypeScript &&
+        new TsconfigPathsPlugin({}),
       !disableESLintPlugin &&
         new ESLintPlugin({
           // Plugin options
